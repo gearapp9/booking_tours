@@ -1,5 +1,6 @@
 const express = require("express");
 const morgan = require("morgan");
+const tourRouter = require("./routes/tourRouter");
 
 const app = express();
 
@@ -12,5 +13,6 @@ app.use(express.json());
 //load static files from public folder
 app.use(express.static(`${__dirname}/public`));
 
+app.use("/api/v1/tours", tourRouter);
 
 module.exports = app;

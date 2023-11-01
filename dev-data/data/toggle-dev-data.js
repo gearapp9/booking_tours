@@ -21,9 +21,8 @@ mongoose
     console.log(`DB connection failed\n${e}`);
   });
 
-  //reding json file
+//reading json file
 const tours = JSON.parse(fs.readFileSync(`${__dirname}/tours.json`, "utf-8"));
-
 
 //import data to db
 const importData = async () => {
