@@ -14,8 +14,10 @@ app.use(express.json());
 //load static files from public folder
 app.use(express.static(`${__dirname}/public`));
 
+
 app.use("/api/v1/tours", tourRouter);
 
+//handeling all the unhandeled routes
 app.all("*", (req, res, next) => {
   next(new AppError(`can't find ${req.originalUrl} on this server!`, 400));
 });
