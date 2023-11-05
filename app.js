@@ -1,6 +1,7 @@
 const express = require("express");
 const morgan = require("morgan");
 const tourRouter = require("./routes/tourRouter");
+const userRouter = require("./routes/userRouter");
 const AppError = require("./utils/AppError");
 const handleGlobalError = require("./controllers/errorController");
 const app = express();
@@ -16,8 +17,9 @@ app.use(express.static(`${__dirname}/public`));
 
 
 app.use("/api/v1/tours", tourRouter);
+app.use("/api/v1/users", userRouter);
 
-//handeling all the unhandeled routes
+//handling all the unhandeled routes
 app.all("*", (req, res, next) => {
   next(new AppError(`can't find ${req.originalUrl} on this server!`, 400));
 });
