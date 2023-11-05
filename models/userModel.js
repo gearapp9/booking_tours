@@ -66,5 +66,18 @@ userSchema.methods.correctPassword = async (candidatePassword, password) => {
   return await bcrypt.compare(candidatePassword, password);
 };
 
+//checking if user changed his pass after token was issued
+//if true means that the password is changed after jwt was issued so it won't be valid
+userSchema.methods.passwodChangedAfter = function (JWTtime) {
+  if(this.passwordChangedAt){
+    
+    const changedTime = parseInt(this.passwodChangedAfter.getTime()/1000,10)
+
+    return JWTtime < changedTime
+  }
+
+  return false
+}
+
 const User = mongoose.model("User", userSchema);
 module.exports = User;

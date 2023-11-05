@@ -1,3 +1,4 @@
+const { promisify } = require("util");
 const catchAsync = require("../utils/catchAsync");
 const User = require("./../models/userModel");
 const jwt = require("jsonwebtoken");
@@ -48,6 +49,52 @@ exports.singIn = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: "success",
-    token
+    token,
   });
+});
+
+exports.protect = catchAsync(async (req, res, next) => {
+  let token;
+
+  //getting token
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    token = req.headers.authorization.split(" ")[1];
+  }
+
+  //check if token exists
+  if (!token) {
+    return next(new AppError("You are not logged in ! please log in", 401));
+  }
+
+  //check if token is valid
+  const decode = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+
+  //check if user exists
+  const currentUser =await User.findById(decode.id);
+
+  if (!currentUser) {
+    return next(
+      new AppError(
+        "the user belonging to this token does no longer exists",
+        401
+      )
+    );
+  }
+
+  //check if user just checnged his password
+  if (currentUser.passwodChangedAfter(decode.ait)) {
+    return next(
+      new AppError(
+        "user recently changed his password ! please login again",
+        401
+      )
+    );
+  }
+
+  req.user = currentUser;
+
+  next();
 });
