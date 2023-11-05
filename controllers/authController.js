@@ -4,9 +4,20 @@ const User = require("./../models/userModel");
 const jwt = require("jsonwebtoken");
 const AppError = require("./../utils/AppError");
 const sendEmail = require("./../utils/sendEmail");
+
 const singJwt = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES,
+  });
+};
+
+const sendJwt = (user, statusCode, res) => {
+  const token = singJwt(user._id);
+
+  res.status(statusCode).json({
+    status: "success",
+    token,
+    data: { user },
   });
 };
 
@@ -18,15 +29,7 @@ exports.signUp = catchAsync(async (req, res, next) => {
     passwordConfirm: req.body.passwordConfirm,
   });
 
-  const token = singJwt(newUser._id);
-
-  res.status(200).json({
-    status: "success",
-    token,
-    data: {
-      newUser,
-    },
-  });
+  sendJwt(newUser, 200, res);
 });
 
 exports.singIn = catchAsync(async (req, res, next) => {
@@ -39,19 +42,14 @@ exports.singIn = catchAsync(async (req, res, next) => {
 
   const user = await User.findOne({ email }).select("+password");
 
-  //if user not defined directly throw an error not need to run the other condition
+  //if user not defined directly throw an error,and no need to run the other condition
 
   if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new AppError("incorrect email or password", 401));
   }
 
   //creating json web token
-  const token = singJwt(user._id);
-
-  res.status(200).json({
-    status: "success",
-    token,
-  });
+  sendJwt(user, 200, res);
 });
 
 exports.protect = catchAsync(async (req, res, next) => {
@@ -168,8 +166,8 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
     passwordResetExpires: { $gte: Date.now() },
   });
 
-  if(!user){
-    return next(new AppError('Token is invalid or has expired', 400))
+  if (!user) {
+    return next(new AppError("Token is invalid or has expired", 400));
   }
 
   user.password = req.body.password;
@@ -178,10 +176,25 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   user.passwordResetExpires = undefined;
   await user.save();
 
-  const token = singJwt(user._id)
+  sendJwt(user, 200, res);
+});
 
-  res.status(200).json({
-    status:"success",
-    token
-  })
+exports.updatePassword = catchAsync(async (req, res, next) => {
+ 
+  //get user from collection
+  const user = await User.findById(req.user.id).select("+password");
+
+  //check if current pass matches the user pass
+  if (!(await user.correctPassword(req.body.currentPassword, user.password))) {
+    return next(new AppError("your current password is wrong", 401));
+  }
+
+  //we can't use findbyidandupdate because we can't run middleware and validators and we want that
+  user.password = req.body.password;
+  user.passwordConfirm = req.body.passwordConfirm;
+  await user.save();
+
+
+
+  sendJwt(user, 200, res);
 });
