@@ -71,6 +71,15 @@ userSchema.pre("save", function (next) {
   next();
 });
 
+
+
+//select only active users
+userSchema.pre(/^find/, function (next) {
+  this.find({ active: { $ne: false } });
+  next();
+});
+
+
 //checking if passwords are correct for login in
 userSchema.methods.correctPassword = async (candidatePassword, password) => {
   return await bcrypt.compare(candidatePassword, password);
