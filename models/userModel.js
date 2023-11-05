@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
+const crypto = require("crypto");
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -69,15 +70,31 @@ userSchema.methods.correctPassword = async (candidatePassword, password) => {
 //checking if user changed his pass after token was issued
 //if true means that the password is changed after jwt was issued so it won't be valid
 userSchema.methods.passwodChangedAfter = function (JWTtime) {
-  if(this.passwordChangedAt){
-    
-    const changedTime = parseInt(this.passwodChangedAfter.getTime()/1000,10)
+  if (this.passwordChangedAt) {
+    const changedTime = parseInt(this.passwodChangedAfter.getTime() / 1000, 10);
 
-    return JWTtime < changedTime
+    return JWTtime < changedTime;
   }
 
-  return false
-}
+  return false;
+};
+
+//create user password reset tokent
+
+userSchema.methods.createUserPasswordResetToken = function () {
+  //creating the string
+  const token = crypto.randomBytes(92).toString("hex");
+
+  //hashing the string
+  this.passwordResetToken = crypto
+    .createHash("sha256")
+    .update(token)
+    .digest("hex");
+
+  //set the token to be expired after 10min
+  this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+  return token;
+};
 
 const User = mongoose.model("User", userSchema);
 module.exports = User;
