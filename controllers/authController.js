@@ -40,6 +40,8 @@ exports.singIn = catchAsync(async (req, res, next) => {
   const user = await User.findOne({ email }).select("+password");
 
   //if user not defined directly throw an error not need to run the other condition
+  
+  
   if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new AppError("incorrect email or password", 401));
   }
@@ -73,7 +75,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   const decode = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
   //check if user exists
-  const currentUser =await User.findById(decode.id);
+  const currentUser = await User.findById(decode.id);
 
   if (!currentUser) {
     return next(
@@ -98,3 +100,16 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   next();
 });
+
+
+//restrict access to routes for unwanted users 
+exports.restrictTo = (...roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      return next(
+        new AppError("you do not have permission to perform this task",403)
+      );
+    }
+    next();
+  };
+};
