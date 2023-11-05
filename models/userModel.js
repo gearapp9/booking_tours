@@ -62,6 +62,15 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
+//setting passwordChangedAt 
+userSchema.pre("save", function (next) {
+  if (!this.isModified("password") || this.isNew) return next()
+
+    //waiting for the JWtokent to be created cause it may take longer
+    this.passwordChangedAt = Date.now() - 1000;
+  next();
+});
+
 //checking if passwords are correct for login in
 userSchema.methods.correctPassword = async (candidatePassword, password) => {
   return await bcrypt.compare(candidatePassword, password);
