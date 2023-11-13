@@ -1,6 +1,7 @@
 const User = require("../models/userModel");
 const AppError = require("../utils/AppError");
 const catchAsync = require("../utils/catchAsync");
+const handleFactory = require("./handleFactory")
 
 const filteredFields = (obj, ...fields) => {
   let newObj = {};
@@ -11,16 +12,7 @@ const filteredFields = (obj, ...fields) => {
   return newObj;
 };
 
-exports.getAllUser = catchAsync(async (req, res, next) => {
-  const users = await User.find();
-  res.status(200).json({
-    staus: "seccess",
-    results: users.length,
-    data: {
-      users,
-    },
-  });
-});
+exports.getAllUser = handleFactory.getAll(User)
 
 exports.updateMe = catchAsync(async (req, res, next) => {
 

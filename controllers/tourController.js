@@ -2,6 +2,7 @@ const ApiFeatures = require("../utils/ApiFeatures");
 const AppError = require("../utils/AppError");
 const Tour = require("./../models/tourModel");
 const catchAsync = require("./../utils/catchAsync");
+const handleFactory = require("./handleFactory");
 
 //alias middleware to get top 5 cheap tours
 exports.getTopCheapFive = (req, res, next) => {
@@ -11,70 +12,12 @@ exports.getTopCheapFive = (req, res, next) => {
   next();
 };
 
-exports.getAllTours = catchAsync(async (req, res, next) => {
-  const features = new ApiFeatures(Tour.find(), req.query)
-    .filter()
-    .sort()
-    .selectFields()
-    .page();
-
-  const tours = await features.query;
-
-  res.status(200).json({
-    status: "success",
-    resuls: tours.length,
-    data: {
-      tours,
-    },
-  });
-});
-
-exports.getTour = catchAsync(async (req, res, next) => {
-  const tour = await Tour.findById(req.params.id).populate("reviews");
-
-  if (!tour) return next(new AppError("can't find a tour with that ID", 404));
-
-  res.status(200).json({
-    stauts: "success",
-    data: {
-      tour,
-    },
-  });
-});
-
-exports.createTour = catchAsync(async (req, res, next) => {
-  const newTour = await Tour.create(req.body);
-  res.status(201).json({
-    stauts: "success",
-    data: {
-      newTour,
-    },
-  });
-});
-
-exports.updateTour = catchAsync(async (req, res, next) => {
-  const tour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
-  if (!tour) return next(new AppError("can't find a tour with that ID", 404));
-
-  res.status(200).json({
-    status: "success",
-    data: {
-      tour,
-    },
-  });
-});
-
-exports.deleteTour = catchAsync(async (req, res, next) => {
-  const tour = await Tour.findByIdAndDelete(req.params.id);
-  if (!tour) return next(new AppError("can't find a tour with that ID", 404));
-
-  res.status(204).json({
-    stauts: "success",
-  });
-});
+exports.getAllTours = handleFactory.getAll(Tour);
+//also populating review in get tour using virtual property (view tourModel)
+exports.getTour = handleFactory.getOne(Tour, { path: "reviews" });
+exports.createTour = handleFactory.getOne(Tour);
+exports.updateTour = handleFactory.updateOne(Tour);
+exports.deleteTour = handleFactory.deleteOne(Tour);
 
 //getting tours status that have ratingsAverage greater
 exports.getTourStats = catchAsync(async (req, res, next) => {
