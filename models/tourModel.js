@@ -113,6 +113,8 @@ tourSchema.pre(/^find/, function (next) {
   next();
 });
 
+
+//populating guides property to all find queries
 tourSchema.pre(/^find/, function (next) {
   this.populate({
     path: "guides",
