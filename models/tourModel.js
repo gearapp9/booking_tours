@@ -76,6 +76,29 @@ const tourSchema = mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  startLocation: {
+    type: {
+      type: String,
+      default: "Point",
+      enum: ["Point"],
+    },
+    coordinates: [Number],
+    address: String,
+    Description: String,
+  },
+  locations: [
+    {
+      type: {
+        type: String,
+        default: "Point",
+        enum: ["Point"],
+      },
+      coordinates: [Number],
+      address: String,
+      Description: String,
+    },
+  ],
+  guides: [{ type: mongoose.Schema.ObjectId, ref: "User" }],
 });
 
 //document middleware run on save and create:transforming name to a slug ex: Name Game => name-game
@@ -87,6 +110,14 @@ tourSchema.pre("save", function (next) {
 //query middleware on all find to only find tours that are not secret
 tourSchema.pre(/^find/, function (next) {
   this.find({ secretTour: { $ne: true } });
+  next();
+});
+
+tourSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "guides",
+    select: "-__v -passwordChangedAt",
+  });
   next();
 });
 
