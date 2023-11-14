@@ -71,6 +71,10 @@ reviewSchema.statics.calcAvgRating = async function (tourId) {
   }
 };
 
+//preventing user from creating dubblicate reviews for the same tour
+reviewSchema.index({ tour: 1, user: 1 }, { unique: true });
+
+
 //calling the static method (calcAvgRating) after the query is executed when review is created
 reviewSchema.post("save", async function () {
   //this.contructor points to the current review
