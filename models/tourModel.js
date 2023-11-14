@@ -107,6 +107,11 @@ const tourSchema = mongoose.Schema(
   }
 );
 
+//improve read speed
+tourSchema.index({ price: 1, ratingsAverage: -1 });
+tourSchema.index({ slug: 1 });
+
+
 //document middleware run on save and create:transforming name to a slug ex: Name Game => name-game
 tourSchema.pre("save", function (next) {
   this.slug = slugify(this.name, { name: true });

@@ -13,6 +13,7 @@ exports.getAll = (Model) =>
       .selectFields()
       .page();
 
+    // const doc = await features.query.explain()
     const doc = await features.query;
 
     res.status(200).json({
@@ -26,9 +27,8 @@ exports.getAll = (Model) =>
 
 exports.getOne = (Model, options) =>
   catchAsync(async (req, res, next) => {
-
     let query = Model.findById(req.params.id);
-    //chaning quey for possible population 
+    //chaning quey for possible population
     if (options) query = query.populate(options);
     const doc = await query;
 
