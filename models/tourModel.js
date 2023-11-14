@@ -34,6 +34,7 @@ const tourSchema = mongoose.Schema(
       default: 4.5,
       min: [1, "Rating must be above 1.0"],
       max: [5, "Rating must be below 5.0"],
+      set: (val) => Math.round(val * 10) / 10,
     },
     ratingsQuantity: {
       type: Number,
@@ -111,7 +112,6 @@ const tourSchema = mongoose.Schema(
 tourSchema.index({ price: 1, ratingsAverage: -1 });
 tourSchema.index({ slug: 1 });
 
-
 //document middleware run on save and create:transforming name to a slug ex: Name Game => name-game
 tourSchema.pre("save", function (next) {
   this.slug = slugify(this.name, { name: true });
@@ -124,17 +124,14 @@ tourSchema.pre(/^find/, function (next) {
   next();
 });
 
-
 //virtual populate
-tourSchema.virtual("reviews",{
-  ref:"Review",
+tourSchema.virtual("reviews", {
+  ref: "Review",
   //where in review model
-  foreignField:"tour",
+  foreignField: "tour",
   //in this model
-  localField:"_id"
-})
-
-
+  localField: "_id",
+});
 
 //populating guides property to all find queries
 tourSchema.pre(/^find/, function (next) {
