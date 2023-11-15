@@ -145,10 +145,11 @@ tourSchema.pre(/^find/, function (next) {
 });
 
 //aggregation middleware to also select (match) tours that are not secret
-tourSchema.pre("aggregation", function (next) {
-  this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
-  next();
-});
+//however it will effect the geo aggration so i comment it out
+// tourSchema.pre("aggregation", function (next) {
+//   this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
+//   next();
+// });
 
 const Tour = mongoose.model("Tour", tourSchema);
 module.exports = Tour;
