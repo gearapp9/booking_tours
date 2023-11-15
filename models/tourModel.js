@@ -112,6 +112,8 @@ const tourSchema = mongoose.Schema(
 tourSchema.index({ price: 1, ratingsAverage: -1 });
 tourSchema.index({ slug: 1 });
 
+tourSchema.index({ startLocation: "2dsphere" });
+
 //document middleware run on save and create:transforming name to a slug ex: Name Game => name-game
 tourSchema.pre("save", function (next) {
   this.slug = slugify(this.name, { name: true });

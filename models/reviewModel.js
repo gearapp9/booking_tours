@@ -71,7 +71,7 @@ reviewSchema.statics.calcAvgRating = async function (tourId) {
   }
 };
 
-//preventing user from creating dubblicate reviews for the same tour
+//preventing user from creating duplicate reviews for the same tour
 reviewSchema.index({ tour: 1, user: 1 }, { unique: true });
 
 
