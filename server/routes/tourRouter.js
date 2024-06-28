@@ -26,7 +26,8 @@ router.route("/distances/:latlng/unit/:unit").get(tourController.getTourDistance
 
 router
   .route("/")
-  .get(authController.protect, tourController.getAllTours)
+  // authController.protect,
+  .get( tourController.getAllTours)
   .post(
     authController.protect,
     authController.restrictTo("admin", "lead-guide"),

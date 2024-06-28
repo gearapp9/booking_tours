@@ -14,11 +14,11 @@ exports.getAll = (Model) =>
       .page();
 
     // const doc = await features.query.explain()
-    const doc = await features.query;
+    const doc = await features.query
 
     res.status(200).json({
       status: "success",
-      resuls: doc.length,
+      results: doc.length,
       data: {
         doc,
       },
@@ -36,7 +36,7 @@ exports.getOne = (Model, options) =>
       return next(new AppError("can't find a document with that ID", 404));
 
     res.status(200).json({
-      stauts: "success",
+      status: "success",
       data: {
         doc,
       },
@@ -78,6 +78,7 @@ exports.deleteOne = (Model) =>
       return next(new AppError("can't find a document with that ID", 404));
 
     res.status(204).json({
-      stauts: "success",
+      status: "success",
+      data: null,
     });
   });
