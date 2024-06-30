@@ -1,19 +1,15 @@
 import moment from "moment";
 import { User } from "../../../models/user/User";
-import { getImageLocation } from "../../../utils/getImageLocation";
 import {
   DescriptionBox,
   DescriptionText,
-  HeadingSecondaryMaBtLg,
+  
   OverviewBox,
   OverviewBoxGroup,
-  OverviewBoxIcon,
-  OverviewBoxImg,
-  OverviewBoxLabel,
-  OverviewBoxText,
   SectionDescription,
 } from "./TourDescription.styles";
 import OverviewBoxDetail from "./components/OverviewBox.component";
+import { HeadingSecondaryMaBtLg } from "../../shared-styles/styles.component";
 
 type TourDescriptionProps = {
   startDates: Date[];

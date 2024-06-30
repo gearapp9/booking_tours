@@ -31,7 +31,7 @@ const sendJwt = (user, statusCode, res) => {
   res.status(statusCode).json({
     status: "success",
     token,
-    data: { user },
+    data: { doc:user },
   });
 };
 
@@ -75,6 +75,8 @@ exports.protect = catchAsync(async (req, res, next) => {
     req.headers.authorization.startsWith("Bearer")
   ) {
     token = req.headers.authorization.split(" ")[1];
+  } else if (req.cookies.jwt) {
+    token = req.cookies.jwt;
   }
 
   //check if token exists

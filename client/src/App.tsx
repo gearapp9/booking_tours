@@ -5,6 +5,7 @@ import Navigation from "./routes/navigation/Navigation.component";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
 import TourPage from "./routes/tourPage/TourPage.component";
+import SignIn from "./routes/sign-in/SignIn.component";
 
 const App = () => {
   return (
@@ -12,8 +13,9 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Navigation />}>
-            <Route index element={<Home />} /> 
-            <Route path="/tour/:slug/*" element={<TourPage/>}/>
+            <Route index element={<Home />} />
+            <Route path="/tour/:slug/*" element={<TourPage />} />
+            <Route path="/sign-in" element={<SignIn />} />
           </Route>
         </Routes>
       </BrowserRouter>

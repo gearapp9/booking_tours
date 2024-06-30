@@ -1,5 +1,4 @@
 import styled, { css } from "styled-components";
-import { HeadingSecondary } from "../../shared-styles/styles.component";
 
 const sectionDescriptionChildren = css`
   padding: 0 8vw;
@@ -34,10 +33,7 @@ export const OverviewBoxGroup = styled.div`
   margin-bottom: 7rem;
 `;
 
-export const HeadingSecondaryMaBtLg = styled(HeadingSecondary)`
-  
-  margin-bottom: 3.5rem !important;
-`;
+
 
 export const OverviewBoxDt = styled.div`
   

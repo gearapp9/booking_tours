@@ -1,6 +1,6 @@
 import { takeLatest, put, all, call } from "typed-redux-saga";
 import { ALL_TOURS_ACTION, TOUR_ACTION } from "../../models/Tour/TourTypes";
-import { getAllTours, getTour } from "../../utils/ToursApiCalls";
+import { getAllTours, getTour } from "../../utils/toursApiCalls";
 import {
   getAllToursActionFailed,
   getAllToursActionSuccess,
@@ -13,11 +13,11 @@ import { Tour } from "../../models/Tour/Tour";
 function* fetchAllToursAsync() {
   try {
     const toursData = yield* call(getAllTours);
-    yield put(
+    yield* put(
       getAllToursActionSuccess(toursData.data?.doc ? toursData.data?.doc : [])
     );
   } catch (error) {
-    yield put(getAllToursActionFailed(error as Error));
+    yield* put(getAllToursActionFailed(error as Error));
   }
 }
 

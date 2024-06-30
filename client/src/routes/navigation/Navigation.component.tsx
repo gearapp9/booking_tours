@@ -1,5 +1,4 @@
-import { Outlet } from "react-router-dom";
-
+import { Outlet, useNavigate } from "react-router-dom";
 
 import {
   Header,
@@ -18,7 +17,7 @@ import {
 import logoWhite from "../../assets/logo-white.png";
 
 const Navigation = () => {
-  
+  const navigate = useNavigate();
 
   return (
     <>
@@ -42,7 +41,9 @@ const Navigation = () => {
           <NavUserImg src="img/user.jpg" alt="User photo" />
           <span>Jonas</span>
         </NavElement> */}
-          <NavElement as="button">Log in</NavElement>
+          <NavElement as="button" onClick={() => navigate("/sign-in")}>
+            Log in
+          </NavElement>
           <NavElementCtaButton as="button">Sign up</NavElementCtaButton>
         </NavUser>
       </Header>

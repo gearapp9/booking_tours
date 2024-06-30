@@ -145,7 +145,10 @@ export const HeadingSecondary = styled.h2`
   line-height: 1.3;
   display: inline-block;
 `;
-
+export const HeadingSecondaryMaBtLg = styled(HeadingSecondary)`
+  
+  margin-bottom: 3.5rem !important;
+`;
 export const HeaderHero = styled.div`
   height: 100%;
 `;

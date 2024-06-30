@@ -17,8 +17,9 @@ type OneTourType = {
 export type TourState ={
   tours:AllToursType
   tour:OneTourType
-
 }
+
+
 export const TOUR = "tour";
 export type TOUR = typeof TOUR;
 
