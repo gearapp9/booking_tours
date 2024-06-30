@@ -20,19 +20,24 @@ router
     tourController.getMonthlyPlan
   );
 
-
-router.route("/tours-within/:distance/center/:latlng/unit/:unit").get(tourController.getToursWithin)
-router.route("/distances/:latlng/unit/:unit").get(tourController.getTourDistance)
+router
+  .route("/tours-within/:distance/center/:latlng/unit/:unit")
+  .get(tourController.getToursWithin);
+router
+  .route("/distances/:latlng/unit/:unit")
+  .get(tourController.getTourDistance);
 
 router
   .route("/")
   // authController.protect,
-  .get( tourController.getAllTours)
+  .get(tourController.getAllTours)
   .post(
     authController.protect,
     authController.restrictTo("admin", "lead-guide"),
     tourController.createTour
   );
+
+router.route("/tour/:slug").get(tourController.getTourBySLug);
 
 router
   .route("/:id")

@@ -1,4 +1,6 @@
 import { Tour } from "../../models/Tour/Tour";
+import moment from "moment";
+import { getImageLocation } from "../../utils/getImageLocation";
 import {
   Card,
   CardHeader,
@@ -18,65 +20,79 @@ import {
   DetailsLink,
 } from "./tourCard.styles";
 
-const TourCard = ({tour}) => {
+type TourCardProp = {
+  tour: Tour;
+};
 
-  
+const TourCard = ({ tour }: TourCardProp) => {
   return (
     <Card>
       <CardHeader>
         <CardPicture>
           <CardPictureOverlay>&nbsp;</CardPictureOverlay>
-          <CardPictureImg src="img/tour-1-cover.jpg" alt="Tour 1" />
+          <CardPictureImg
+            src={getImageLocation(tour.imageCover, "tour")}
+            alt={tour.name}
+          />
         </CardPicture>
         <HeadingTertirary>
-          <span>The Forest Hiker</span>
+          <span>{tour.name}</span>
         </HeadingTertirary>
       </CardHeader>
 
       <CardDetails>
-        <CardSubHeading>Easy 5-day tour</CardSubHeading>
+        <CardSubHeading>{`${tour.difficulty} ${tour.duration}-day tour`}</CardSubHeading>
         {/* prettier-ignore    */}
-        <CardText>Breathtaking hike through the Canadian Banff National Park</CardText>
+        <CardText>{tour.summary}</CardText>
 
         <CardData>
           <CardIcon>
-            <use href="img/icons.svg#icon-map-pin"></use>
+            <use xlinkHref={getImageLocation("icons.svg#icon-map-pin")}></use>
           </CardIcon>
-          <span>Banff, Canada</span>
+          <span>{tour.startLocation.description}</span>
         </CardData>
 
         <CardData>
           <CardIcon>
-            <use href="img/icons.svg#icon-map-pin"></use>
+            <use xlinkHref={getImageLocation("icons.svg#icon-calendar")}></use>
           </CardIcon>
-          <span>April 2021</span>
+          <span>
+            {moment
+              .utc(
+                tour.startDates[0].toLocaleString("en-us", {
+                  month: "long",
+                  year: "numeric",
+                })
+              )
+              .format("MM/YY")}
+          </span>
         </CardData>
 
         <CardData>
           <CardIcon>
-            <use href="img/icons.svg#icon-map-pin"></use>
+            <use xlinkHref={getImageLocation("icons.svg#icon-flag")}></use>
           </CardIcon>
-          <span>3 stops</span>
+          <span>{`${tour.locations.length} stops`}</span>
         </CardData>
 
         <CardData>
           <CardIcon>
-            <use href="img/icons.svg#icon-map-pin"></use>
+            <use xlinkHref={getImageLocation("icons.svg#icon-user")}></use>
           </CardIcon>
-          <span>25 people</span>
+          <span>{`${tour.maxGroupSize} people`}</span>
         </CardData>
       </CardDetails>
 
       <CardFooter>
         <p>
-          <CardFooterValue>$297</CardFooterValue>
+          <CardFooterValue>{`$ ${tour.price}  `}</CardFooterValue>
           <CardFooterText>per person</CardFooterText>
         </p>
         <CardRatings>
-          <CardFooterValue>4.9</CardFooterValue>
-          <CardFooterText>rating (21)</CardFooterText>
+          <CardFooterValue>{tour.ratingsAverage}</CardFooterValue>
+          <CardFooterText>{`  rating (${tour.ratingsQuantity})`}</CardFooterText>
         </CardRatings>
-        <DetailsLink href="#">Details</DetailsLink>
+        <DetailsLink to={`/tour/${tour.slug}`}>Details</DetailsLink>
       </CardFooter>
     </Card>
   );

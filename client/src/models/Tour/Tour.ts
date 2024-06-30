@@ -1,6 +1,7 @@
+import { Review } from "../review/Review";
 import { User } from "../user/User";
 
-type Location = {
+export type Location = {
   type: string;
   coordinates: number[];
   address: string;
@@ -28,4 +29,5 @@ export interface Tour {
   guides: User[];
   startLocation: Location;
   locations: Location[];
+  reviews?:Review[]
 }

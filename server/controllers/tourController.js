@@ -19,6 +19,20 @@ exports.createTour = handleFactory.getOne(Tour);
 exports.updateTour = handleFactory.updateOne(Tour);
 exports.deleteTour = handleFactory.deleteOne(Tour);
 
+exports.getTourBySLug = catchAsync(async (req, res, next) => {
+  const tour = await Tour.findOne({ slug: req.params.slug }).populate({
+    path: "reviews",
+    fields: "review rating user",
+  });
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      doc: tour,
+    },
+  });
+});
+
 //getting tours status that have ratingsAverage greater
 exports.getTourStats = catchAsync(async (req, res, next) => {
   const stats = await Tour.aggregate([
@@ -154,17 +168,16 @@ exports.getTourDistance = catchAsync(async (req, res, next) => {
           type: "Point",
           coordinates: [lng * 1, lat * 1],
         },
-        distanceField:"distance",
-        distanceMultiplier:multiplier
+        distanceField: "distance",
+        distanceMultiplier: multiplier,
       },
-      
     },
     {
-      $project:{
-        distance:1,
-        name:1
-      }
-    }
+      $project: {
+        distance: 1,
+        name: 1,
+      },
+    },
   ]);
 
   res.status(200).json({
@@ -174,5 +187,4 @@ exports.getTourDistance = catchAsync(async (req, res, next) => {
       distances,
     },
   });
-
 });

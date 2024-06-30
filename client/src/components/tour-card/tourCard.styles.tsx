@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import {
   ButtonGreen,
   ButtonSmall,
@@ -154,7 +155,7 @@ export const CardRatings = styled.p`
   grid-row: 2 / 3;
 `;
 
-export const DetailsLink = styled.a`
+export const DetailsLink = styled(Link)`
   ${ButtonStyled}
   ${ButtonGreen}
   ${ButtonSmall}

@@ -1,7 +1,14 @@
 import { takeLatest, put, all, call } from "typed-redux-saga";
-import { ALL_TOURS_ACTION } from "../../models/Tour/TourTypes";
-import { getAllTours } from "../../utils/ToursApiCalls";
-import { getAllToursActionFailed, getAllToursActionSuccess } from "./tourReducer";
+import { ALL_TOURS_ACTION, TOUR_ACTION } from "../../models/Tour/TourTypes";
+import { getAllTours, getTour } from "../../utils/ToursApiCalls";
+import {
+  getAllToursActionFailed,
+  getAllToursActionSuccess,
+  getTourActionFailed,
+  getTourActionSuccess,
+} from "./tourReducer";
+import { PayloadAction } from "@reduxjs/toolkit";
+import { Tour } from "../../models/Tour/Tour";
 
 function* fetchAllToursAsync() {
   try {
@@ -9,10 +16,24 @@ function* fetchAllToursAsync() {
     yield put(
       getAllToursActionSuccess(toursData.data?.doc ? toursData.data?.doc : [])
     );
-    
   } catch (error) {
     yield put(getAllToursActionFailed(error as Error));
   }
+}
+
+function* fetchTourAsync({ payload: slug }: PayloadAction<string>) {
+  try {
+    const tour = yield* call(getTour, slug);
+    yield* put(
+      getTourActionSuccess(tour.data?.doc ? tour.data?.doc : ({} as Tour))
+    );
+  } catch (error) {
+    yield* put(getTourActionFailed(error as Error));
+  }
+}
+
+function* onFetchTour() {
+  yield* takeLatest(TOUR_ACTION, fetchTourAsync);
 }
 
 function* onFetchAllTours() {
@@ -20,5 +41,5 @@ function* onFetchAllTours() {
 }
 
 export function* tourSaga() {
-  yield* all([call(onFetchAllTours)]);
+  yield* all([call(onFetchAllTours), call(onFetchTour)]);
 }

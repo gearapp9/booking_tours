@@ -1,14 +1,9 @@
-import { useSelector } from "react-redux";
-import {
-  CardContainer,
-  MainContent,
-} from "../../components/shared-styles/styles.component";
-import TourCard from "../../components/tour-card/TourCard.component";
-import { selectAllToursData } from "../../store/tour/tourSelector";
+import { MainContent } from "../../components/shared-styles/styles.component";
+
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getAllToursAction } from "../../store/tour/tourReducer";
-
+import TourCardContainer from "../../components/tour-card-container/TourCardContainer.component";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -17,18 +12,9 @@ const Home = () => {
     dispatch(getAllToursAction());
   }, []);
 
-  const toursData = useSelector(selectAllToursData);
- 
- 
-  
   return (
     <MainContent>
-      <CardContainer>
-        {toursData?.map((val) => {
-          
-          return <TourCard key={val.id} tour={val}/>;
-        })}
-      </CardContainer>
+      <TourCardContainer />
     </MainContent>
   );
 };

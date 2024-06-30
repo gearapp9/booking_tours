@@ -3,9 +3,16 @@ import { TOUR, TourState } from "../../models/Tour/TourTypes";
 import { Tour } from "../../models/Tour/Tour";
 
 const INITIAL_STATE: TourState = {
-  data: [],
-  isLoading: false,
-  error: null,
+  tour: {
+    data: null,
+    isLoading: false,
+    error: null,
+  },
+  tours: {
+    data: null,
+    isLoading: false,
+    error: null,
+  },
 };
 
 const tourSlice = createSlice({
@@ -14,22 +21,45 @@ const tourSlice = createSlice({
   reducers: {
     /* prettier-ignore    */
     getAllToursAction: (state: TourState) => {
-      state.isLoading = true;
+      state.tours.isLoading = true;
     },
     /* prettier-ignore    */
     getAllToursActionSuccess:(state:TourState,{payload}:PayloadAction<Tour[]>)=>{
-        state.isLoading = false
-        state.data = payload
+        state.tours.isLoading = false
+        state.tours.data = payload
     },
     /* prettier-ignore    */
     getAllToursActionFailed:(state:TourState,{payload}:PayloadAction<Error>)=>{
-        state.isLoading = false,
-        state.error = payload
+        state.tours.isLoading = false,
+        state.tours.error = payload
+    },
+
+    //one single tour
+    /* prettier-ignore    */
+    getTourAction: (state: TourState,{payload}:PayloadAction<string>) => {
+      state.tour.isLoading = true;
+    },
+    /* prettier-ignore    */
+    getTourActionSuccess:(state:TourState,{payload}:PayloadAction<Tour>)=>{
+      state.tour.isLoading = false;
+      state.tour.data = payload
+    },
+
+    /* prettier-ignore    */
+    getTourActionFailed:(state:TourState,{payload}:PayloadAction<Error>)=>{
+      state.tour.isLoading=false
+      state.tour.error = payload
     },
   },
 });
 
 export const tourReducer = tourSlice.reducer;
 
-/* prettier-ignore    */
-export const { getAllToursAction,getAllToursActionFailed,getAllToursActionSuccess } =tourSlice.actions;
+export const {
+  getAllToursAction,
+  getAllToursActionFailed,
+  getAllToursActionSuccess,
+  getTourAction,
+  getTourActionFailed,
+  getTourActionSuccess,
+} = tourSlice.actions;
