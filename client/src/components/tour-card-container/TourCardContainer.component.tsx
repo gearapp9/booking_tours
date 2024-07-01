@@ -12,6 +12,7 @@ const TourCardContainer = () => {
   const loading = useSelector(selectAllToursIsLoading);
 
   
+  
 
   return (
     <CardContainer>

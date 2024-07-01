@@ -37,18 +37,20 @@ router
     tourController.createTour
   );
 
-router.route("/tour/:slug").get(tourController.getTourBySLug);
+router
+  .route("/tour/:slug")
+  .get(authController.protect, tourController.getTourBySLug);
+
+router.use(authController.protect);
 
 router
   .route("/:id")
   .get(tourController.getTour)
   .patch(
-    authController.protect,
     authController.restrictTo("admin", "lead-guide"),
     tourController.updateTour
   )
   .delete(
-    authController.protect,
     authController.restrictTo("admin", "lead-guide"),
     tourController.deleteTour
   );

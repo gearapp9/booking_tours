@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { max, NavContainer } from "../../components/shared-styles/styles.component";
+import { Link } from "react-router-dom";
 
 // xs: "320px",
 // sm: "640px",
@@ -64,7 +65,7 @@ export const NavTours = styled(NavContainer)`
   }
 `;
 
-export const NavElement = styled.a`
+export const NavElement = styled(Link)`
   ${NavElementStyles}
   &:link ,
     &:visited {

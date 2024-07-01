@@ -13,23 +13,25 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectTour, selectTourIsLoading } from "../../store/tour/tourSelector";
 import { Tour } from "../../models/Tour/Tour";
+import { selectUser } from "../../store/user/userSelector";
+import { User } from "../../models/user/User";
 
 const TourPage = () => {
   const { slug } = useParams();
   const dispatch = useDispatch();
+  const user = useSelector(selectUser) as User;
 
   useEffect(() => {
-    dispatch(getTourAction(slug ? slug : ""));
+    user && dispatch(getTourAction(slug ? slug : ""));
   }, []);
 
   const loading = useSelector(selectTourIsLoading);
 
   const tour = useSelector(selectTour) as Tour;
 
-
   return (
     <Fragment>
-      {!loading && tour != null ? (
+      {!loading && tour != null && user != null ? (
         <>
           <TourHeader
             name={tour.name}
@@ -47,12 +49,15 @@ const TourPage = () => {
             startDates={tour.startDates}
           />
           <TourPictures images={tour.images} />
-          <TourMap startLocation={tour.startLocation} locations={tour.locations} />
+          <TourMap
+            startLocation={tour.startLocation}
+            locations={tour.locations}
+          />
           <TourReviews reviews={tour.reviews ? tour.reviews : []} />
           <TourCta duration={tour.duration} images={tour.images} />
         </>
       ) : (
-        ""
+        "log in please"
       )}
     </Fragment>
   );

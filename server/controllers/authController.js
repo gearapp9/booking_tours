@@ -23,15 +23,15 @@ const sendJwt = (user, statusCode, res) => {
 
   if (process.env.DEV_ENV === "productions") cookieOptions.secure = true;
 
-  res.cookie("jwt", cookieOptions);
+  res.cookie("jwt", token, cookieOptions);
 
   //removing password from the output
   user.password = undefined;
-
+  user._id = undefined
   res.status(statusCode).json({
     status: "success",
     token,
-    data: { doc:user },
+    data: { doc: user },
   });
 };
 
@@ -54,7 +54,9 @@ exports.singIn = catchAsync(async (req, res, next) => {
     return next(new AppError("please provide a valid email and password", 400));
   }
 
-  const user = await User.findOne({ email }).select("+password");
+  const user = await User.findOne({ email }).select(
+    "+password -__v -email -role"
+  );
 
   //if user not defined directly throw an error,and no need to run the other condition
 
@@ -64,6 +66,18 @@ exports.singIn = catchAsync(async (req, res, next) => {
 
   //creating json web token
   sendJwt(user, 200, res);
+});
+
+exports.signOut = catchAsync(async (req, res, next) => {
+  res.cookie("jwt", "signed out", {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+  });
+
+  res.status(200).json({
+    status: "success",
+    data: { doc: null },
+  });
 });
 
 exports.protect = catchAsync(async (req, res, next) => {
@@ -78,18 +92,18 @@ exports.protect = catchAsync(async (req, res, next) => {
   } else if (req.cookies.jwt) {
     token = req.cookies.jwt;
   }
-
+  
   //check if token exists
   if (!token) {
     return next(new AppError("You are not logged in ! please log in", 401));
   }
-
+  
   //check if token is valid
   const decode = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-
+  
   //check if user exists
   const currentUser = await User.findById(decode.id);
-
+  
   if (!currentUser) {
     return next(
       new AppError(
@@ -98,7 +112,7 @@ exports.protect = catchAsync(async (req, res, next) => {
       )
     );
   }
-
+  
   //check if user just checnged his password
   if (currentUser.passwodChangedAfter(decode.ait)) {
     return next(
