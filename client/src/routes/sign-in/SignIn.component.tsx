@@ -1,23 +1,20 @@
 import { ChangeEvent, FormEvent, useState } from "react";
+import { useDispatch } from "react-redux";
 import {
-  ButtonGreen,
+
   HeadingSecondaryMaBtLg,
   MainContent,
 } from "../../components/shared-styles/styles.component";
+import { Form, LoginForm, LoginButton } from "./SignIn.styles";
+
 import {
   FormGroup,
   FormGroupMaBtMd,
   FormInput,
   FormLabel,
-  Form,
-  LoginForm,
-  LoginButton,
-} from "./SignIn.styles";
-import { login } from "../../utils/userApiCalls";
-import { useDispatch } from "react-redux";
+} from "../../components/shared-styles/styles.component";
+
 import { getUserAction } from "../../store/user/userReducer";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../store/user/userSelector";
 
 const formFieldsInitData: {
   email: string;
@@ -30,8 +27,7 @@ const formFieldsInitData: {
 const SignIn = () => {
   const [formFields, setFormFields] = useState(formFieldsInitData);
   const { email, password } = formFields;
-  const dispatch = useDispatch()
-  const user= useSelector(selectUser) 
+  const dispatch = useDispatch();
   const handleOnchange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormFields({ ...formFields, [name]: value });
@@ -44,13 +40,12 @@ const SignIn = () => {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      dispatch(getUserAction({email, password}));
-      resetFormFields()
+      dispatch(getUserAction({ email, password }));
+      resetFormFields();
     } catch (error) {
       console.log(error);
     }
   };
-  
 
   return (
     <MainContent>
