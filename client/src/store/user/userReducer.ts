@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { USER, UserFormData, UserState } from "../../models/user/userTypes";
+import { USER, UserState } from "../../models/user/userTypes";
 import { User } from "../../models/user/User";
 
 const INITIAL_STATE: UserState = {
@@ -16,7 +16,7 @@ const userSlice = createSlice({
   reducers: {
     getUserAction: (
       state: UserState,
-      { payload }: PayloadAction<UserFormData>
+      { payload }: PayloadAction<{ email: string; password: string }>
     ) => {
       state.user.isLoading = true;
     },
@@ -44,6 +44,36 @@ const userSlice = createSlice({
       state.user.isLoading=false
       state.user.error = payload
     },
+    /* prettier-ignore    */
+    updateUserENAction:(state:UserState,{payload}:PayloadAction<{name:string,email:string}>)=>{
+      state.user.isLoading = true
+    },
+    /* prettier-ignore    */
+    updateUserENActionSuccess:(state:UserState,{payload}:PayloadAction<User|null>)=>{
+      state.user.isLoading = false;
+      state.user.data = payload
+    },
+    /* prettier-ignore    */
+    updateUserENActionFailed:(state:UserState,{payload}:PayloadAction<Error>)=>{
+      state.user.isLoading=false;
+      state.user.error = payload
+    },
+    /* prettier-ignore    */
+    updateUserPasswordAction:(state:UserState,{payload}:PayloadAction<{ currentPassword: string; password: string;
+      passwordConfirm: string;
+    }>)=>{
+      state.user.isLoading=true
+    },
+
+    /* prettier-ignore    */
+    updateUserPasswordActionSuccess:(state:UserState)=>{
+      state.user.isLoading=false
+    },
+    /* prettier-ignore    */
+    updateUserPasswordActionFailed:(state:UserState,{payload}:PayloadAction<Error>)=>{
+      state.user.isLoading=false
+      state.user.error = payload
+    },
   },
 });
 
@@ -55,4 +85,10 @@ export const {
   SignOutUserAction,
   SignOutUserActionFailed,
   SignOutUserActionSuccess,
+  updateUserENAction,
+  updateUserENActionFailed,
+  updateUserENActionSuccess,
+  updateUserPasswordAction,
+  updateUserPasswordActionFailed,
+  updateUserPasswordActionSuccess
 } = userSlice.actions;

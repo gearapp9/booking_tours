@@ -21,33 +21,35 @@ exports.getMe = (req, res, next) => {
 
 exports.updateMe = catchAsync(async (req, res, next) => {
   //throwing an error if user wanted to updated his password on this handler
-  if (req.body.password || req.body.passwordConfirm) {
-    return next(
-      new AppError(
-        "This route is not for password updates. Please use /updateMyPassword.",
-        400
-      )
-    );
-  }
 
-  //filtering the body to only name an email
-  const allowBodyValues = filteredFields(req, body, "name", "email");
-
-  const updatedUSer = await User.findByIdAndUpdate(
-    req.user.id,
-    allowBodyValues,
-    {
-      new: true,
-      runValidators: true,
+    if (req.body.password || req.body.passwordConfirm) {
+      return next(
+        new AppError(
+          "This route is not for password updates. Please use /updateMyPassword.",
+          400
+        )
+      );
     }
-  );
-
-  res.status(200).json({
-    status: "success",
-    data: {
-      user: updatedUSer,
-    },
-  });
+    
+    //filtering the body to only name an email
+    const allowBodyValues = filteredFields(req.body, "name", "email");
+    console.log(allowBodyValues);
+    const updatedUSer = await User.findByIdAndUpdate(
+      req.user.id,
+      allowBodyValues,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+  
+    res.status(200).json({
+      status: "success",
+      data: {
+        doc: updatedUSer,
+      },
+    });
+  
 });
 
 //setting the user to inactive

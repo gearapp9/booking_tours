@@ -1,28 +1,13 @@
 import { getImageLocation } from "../../../../utils/getImageLocation";
 import { SideNav, SideNavLink } from "../../../shared-styles/styles.component";
-import { SideNavActive, SideNavLi } from "./SideMenuList.styles";
+import { SideNavActive, SideNavLi } from "../../UserProfileContent.styles";
 
-const sideListData: { icon: string; text: string }[] = [
-  {
-    icon: "icons.svg#icon-settings",
-    text: "Settings",
-  },
-  {
-    icon: "icons.svg#icon-briefcase",
-    text: "My bookings",
-  },
+type SideMenuListProps = {
+  MenuType: string;
+  sideListData: { icon: string; text: string }[];
+};
 
-  {
-    icon: "icons.svg#icon-star",
-    text: "My reviews",
-  },
-  {
-    icon: "icons.svg#icon-credit-card",
-    text: "Billing",
-  },
-];
-
-const SideMenuList = () => {
+const SideMenuList = ({ MenuType, sideListData }: SideMenuListProps) => {
   const getSideListComponent = (type: string) =>
     ({
       normal: SideNavLi,
@@ -32,10 +17,10 @@ const SideMenuList = () => {
     <SideNav>
       {sideListData.map((data, i) => {
         const CustomSideNavLi = getSideListComponent(
-          i === 0 ? "active" : "normal"
+          i === 0 && MenuType === "user" ? "active" : "normal"
         ) as typeof SideNavLi;
         return (
-          <CustomSideNavLi>
+          <CustomSideNavLi key={i}>
             <SideNavLink>
               <svg>
                 <use xlinkHref={getImageLocation(data.icon)}></use>

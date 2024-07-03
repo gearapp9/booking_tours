@@ -6,13 +6,6 @@ import {
   FormGroup,
 } from "../shared-styles/styles.component";
 
-
-
-
-
-
-
-
 export const AdminNav = styled.div`
   margin-top: 5.5rem;
 `;
@@ -47,6 +40,7 @@ export const FormUserPhoto = styled.img`
 `;
 
 export const FormPhotoUpload = styled(FormGroup)`
+${FormGroup}
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -57,8 +51,7 @@ export const FormPhotoUpload = styled(FormGroup)`
 `;
 
 export const ButtonText = styled.a`
-  &:link,
-  &:visited {
+
     color: #55c57a;
     display: inline-block;
     text-decoration: none;
@@ -66,7 +59,7 @@ export const ButtonText = styled.a`
     padding: 3px;
     -webkit-transition: all 0.2s;
     transition: all 0.2s;
-  }
+  
 
   &:hover {
     background-color: #55c57a;
@@ -92,6 +85,7 @@ export const ButtonText = styled.a`
 `;
 
 export const FormGroupRight = styled(FormGroup)`
+${FormGroup}
   text-align: right !important;
 `;
 
@@ -122,5 +116,35 @@ export const UserView = styled.div`
   display: flex;
 `;
 
+export const UserViewMenu = styled.nav`
+  -webkit-box-flex: 32rem;
+  -ms-flex: 32rem 0 0px;
+  flex: 32rem 0 0;
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    right bottom,
+    from(#7dd56f),
+    to(#28b487)
+  );
+  background-image: linear-gradient(to right bottom, #7dd56f, #28b487);
+  padding: 4rem 0;
+`;
 
+export const SideNavLi = styled.li`
+  margin: 1rem 0;
+  border-left: 0 solid #fff;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+   &:hover {
+    border-left: 4px solid #fff !important;
+  }
+`;
 
+export const SideNavActive = styled.li`
+  ${SideNavLi}
+
+  border-left: 4px solid #fff !important;
+
+ 
+`;

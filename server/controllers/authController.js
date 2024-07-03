@@ -11,8 +11,8 @@ const singJwt = (id) => {
   });
 };
 
-const sendJwt = (user, statusCode, res) => {
-  const token = singJwt(user._id);
+const sendJwt = (userOrigin, statusCode, res) => {
+  const token = singJwt(userOrigin._id);
 
   const cookieOptions = {
     expires: new Date(
@@ -26,8 +26,15 @@ const sendJwt = (user, statusCode, res) => {
   res.cookie("jwt", token, cookieOptions);
 
   //removing password from the output
-  user.password = undefined;
-  user._id = undefined
+  userOrigin.password = undefined;
+
+  //i don't want to send the id, we'll use the token to verify the user
+  const user = {
+    name: userOrigin.name,
+    photo: userOrigin.photo,
+    email:userOrigin.email
+  };
+
   res.status(statusCode).json({
     status: "success",
     token,
@@ -55,7 +62,7 @@ exports.singIn = catchAsync(async (req, res, next) => {
   }
 
   const user = await User.findOne({ email }).select(
-    "+password -__v -email -role"
+    "+password -__v -role"
   );
 
   //if user not defined directly throw an error,and no need to run the other condition
@@ -92,18 +99,18 @@ exports.protect = catchAsync(async (req, res, next) => {
   } else if (req.cookies.jwt) {
     token = req.cookies.jwt;
   }
-  
+
   //check if token exists
   if (!token) {
     return next(new AppError("You are not logged in ! please log in", 401));
   }
-  
+
   //check if token is valid
   const decode = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-  
+
   //check if user exists
   const currentUser = await User.findById(decode.id);
-  
+
   if (!currentUser) {
     return next(
       new AppError(
@@ -112,7 +119,7 @@ exports.protect = catchAsync(async (req, res, next) => {
       )
     );
   }
-  
+
   //check if user just checnged his password
   if (currentUser.passwodChangedAfter(decode.ait)) {
     return next(
@@ -124,7 +131,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   }
 
   req.user = currentUser;
-
+  
   next();
 });
 

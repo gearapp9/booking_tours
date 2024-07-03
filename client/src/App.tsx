@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import TourPage from "./routes/tourPage/TourPage.component";
 import SignIn from "./routes/sign-in/SignIn.component";
 import { store, persistor } from "./store/store";
+import UserSettings from "./routes/user-settings/UserSettings.component";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
               <Route index element={<Home />} />
               <Route path="/tour/:slug/*" element={<TourPage />} />
               <Route path="/sign-in" element={<SignIn />} />
+              <Route path="/settings" element={<UserSettings/>} />
             </Route>
           </Routes>
         </BrowserRouter>

@@ -14,10 +14,11 @@ router.route("/resetpassword/:token").patch(authController.resetPassword);
 
 router.use(authController.protect);
 
-router.patch("/updatepass", authController.updatePassword);
+router.patch("/updatepass", authController.protect,authController.updatePassword);
 router.get("/me", userController.getMe, userController.getUser);
 
-router.patch("/updateme", userController.updateMe);
+router.route("/updateme").patch(authController.protect,userController.updateMe);
+
 router.delete("/deleteme", userController.deleteMe);
 
 router.use(authController.restrictTo("admin"));

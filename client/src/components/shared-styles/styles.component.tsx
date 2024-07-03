@@ -149,6 +149,9 @@ export const HeadingSecondaryMaBtLg = styled(HeadingSecondary)`
   
   margin-bottom: 3.5rem !important;
 `;
+export const HeadingSecondaryMaBtMd = styled(HeadingSecondary)`
+margin-bottom: 3rem !important;
+`
 export const HeaderHero = styled.div`
   height: 100%;
 `;
@@ -184,6 +187,9 @@ export const FormGroup = styled.div`
 `;
 export const FormGroupMaBtMd = styled(FormGroup)`
   margin-bottom: 3rem !important;
+`;
+export const FormGroupMaBtLg = styled(FormGroup)`
+   margin-bottom: 3.5rem !important;
 `;
 
 
@@ -239,12 +245,11 @@ export const SideNav = styled.ul`
   }
 `;
 
-export const SideNavLink = styled.a`
-  -webkit-transform: translateX(-3px);
-  transform: translateX(-3px);
 
-  &:link,
-  &:visited {
+
+
+export const SideNavLink = styled.a`
+ 
     padding: 1rem 4rem;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -259,7 +264,7 @@ export const SideNavLink = styled.a`
     text-decoration: none;
     -webkit-transition: all 0.3s;
     transition: all 0.3s;
-  }
+  
 
   &:hover,
   &:active {
@@ -267,3 +272,4 @@ export const SideNavLink = styled.a`
     transform: translateX(3px);
   }
 `;
+
