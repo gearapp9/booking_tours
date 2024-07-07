@@ -1,13 +1,18 @@
-export const sendData = async <D, T>(url: string, data: D,method:string): Promise<T> => {
-  const response = await fetch(url, {
-    // Adding method type
+import axios, {  AxiosRequestConfig, RawAxiosRequestHeaders } from "axios";
+
+export const sendData = async <D, T>(
+  url: string,
+  data: D,
+  method: string,
+  headers: RawAxiosRequestHeaders
+): Promise<T> => {
+  const config: AxiosRequestConfig = {
     method,
-    // Adding body or contents to send
-    body: JSON.stringify(data),
-    // Adding headers to the request
-    headers: {
-      "Content-type": "application/json; charset=UTF-8",
-    },
-  });
-  return response.json();
+    url,
+    data,
+    headers,
+  };
+
+  const response = await axios(config)
+  return response.data;
 };

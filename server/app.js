@@ -16,7 +16,8 @@ const handleGlobalError = require("./controllers/errorController");
 const app = express();
 
 // Set security HTTP headers
-app.use(helmet());
+
+app.use(helmet({crossOriginResourcePolicy: false,}));
 
 app.use(cors());
 
@@ -33,7 +34,12 @@ const limiter = rateLimit({
 app.use("/api", limiter);
 //add body to req
 app.use(express.json({ limit: "10kb" }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+app.use(express.static('assets'))
+
+
 
 // Data sanitization against NoSQL query injection
 app.use(mongoSanitize());

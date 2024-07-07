@@ -15,7 +15,10 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     validate: [validator.isEmail, "Please provide a valid email"],
   },
-  photo: String,
+  photo: {
+    type: String,
+    default: "default.jpeg",
+  },
   role: {
     type: String,
     enum: ["user", "guide", "lead-guide", "admin"],
@@ -62,23 +65,20 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-//setting passwordChangedAt 
+//setting passwordChangedAt
 userSchema.pre("save", function (next) {
-  if (!this.isModified("password") || this.isNew) return next()
+  if (!this.isModified("password") || this.isNew) return next();
 
-    //waiting for the JWtokent to be created cause it may take longer
-    this.passwordChangedAt = Date.now() - 1000;
+  //waiting for the JWtokent to be created cause it may take longer
+  this.passwordChangedAt = Date.now() - 1000;
   next();
 });
-
-
 
 //select only active users
 userSchema.pre(/^find/, function (next) {
   this.find({ active: { $ne: false } });
   next();
 });
-
 
 //checking if passwords are correct for login in
 userSchema.methods.correctPassword = async (candidatePassword, password) => {

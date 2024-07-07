@@ -1,12 +1,12 @@
 export const getImageLocation = (name: string, type?: string): string => {
   switch (type) {
     case "tour":
-      return `/src/assets/tours/${name}`;
+      return `http://127.0.0.1:3000/tours/${name}`;
 
     case "user":
-      return `/src/assets/users/${name}`;
+      return `http://127.0.0.1:3000/users/${name}`;
 
     default:
-      return `/src/assets/${name}`;
+      return `http://127.0.0.1:3000/${name}`;
   }
 };

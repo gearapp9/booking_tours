@@ -40,7 +40,7 @@ export const FormUserPhoto = styled.img`
 `;
 
 export const FormPhotoUpload = styled(FormGroup)`
-${FormGroup}
+  ${FormGroup}
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -51,15 +51,13 @@ ${FormGroup}
 `;
 
 export const ButtonText = styled.a`
-
-    color: #55c57a;
-    display: inline-block;
-    text-decoration: none;
-    border-bottom: 1px solid #55c57a;
-    padding: 3px;
-    -webkit-transition: all 0.2s;
-    transition: all 0.2s;
-  
+  color: #55c57a;
+  display: inline-block;
+  text-decoration: none;
+  border-bottom: 1px solid #55c57a;
+  padding: 3px;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
 
   &:hover {
     background-color: #55c57a;
@@ -85,7 +83,7 @@ export const ButtonText = styled.a`
 `;
 
 export const FormGroupRight = styled(FormGroup)`
-${FormGroup}
+  ${FormGroup}
   text-align: right !important;
 `;
 
@@ -136,7 +134,7 @@ export const SideNavLi = styled.li`
   border-left: 0 solid #fff;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
-   &:hover {
+  &:hover {
     border-left: 4px solid #fff !important;
   }
 `;
@@ -145,6 +143,37 @@ export const SideNavActive = styled.li`
   ${SideNavLi}
 
   border-left: 4px solid #fff !important;
-
- 
 `;
+export const UploadPhotoLabel = styled.label`
+  color: #55c57a;
+  display: inline-block;
+  text-decoration: none;
+  border-bottom: 1px solid #55c57a;
+  padding: 3px;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+  cursor: pointer;
+  &:hover {
+    background-color: #55c57a;
+    color: #fff;
+    -webkit-box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
+    -webkit-transform: translateY(-2px);
+    transform: translateY(-2px);
+  }
+`;
+export const UploadPhoto = styled.input`
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+
+  &:focus + ${UploadPhotoLabel} {
+    outline: 3px solid #55c57a;
+    outline-offset: 3px;
+  }
+`;
+
+

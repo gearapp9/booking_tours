@@ -1,43 +1,41 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet  } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import {
   Header,
-  ButtonSvg,
+ 
   Headerlogo,
   NavElement,
   NavElementCtaButton,
-  NavSearchForm,
-  NavSearchButton,
-  NavSearchInput,
+  
   NavTours,
   NavUser,
   NavUserImg,
 } from "./nvaigation.styles";
 
 import logoWhite from "../../assets/logo-white.png";
+import logd from "../../../../server/assets/logo-green-round.png"
 import { Fragment } from "react/jsx-runtime";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../store/user/userSelector";
 import { User } from "../../models/user/User";
 import { getImageLocation } from "../../utils/getImageLocation";
-import { SignOutUserAction, getUserAction } from "../../store/user/userReducer";
-import { useEffect } from "react";
+import { SignOutUserAction } from "../../store/user/userReducer";
+
 
 const Navigation = () => {
-  const navigate = useNavigate();
+  console.log(logoWhite);
+  console.log(logd);
+
+  
   const dispatch = useDispatch();
   const user = useSelector(selectUser) as User;
   
-  const signOutUser = (
-    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
-  ) => {
+  
+  const signOutUser = () => {
     try {
-    
-        dispatch(SignOutUserAction());
-   
-    } catch (error) {
-    }
+      dispatch(SignOutUserAction());
+    } catch (error) {}
   };
 
   return (

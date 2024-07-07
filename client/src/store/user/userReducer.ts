@@ -45,7 +45,7 @@ const userSlice = createSlice({
       state.user.error = payload
     },
     /* prettier-ignore    */
-    updateUserENAction:(state:UserState,{payload}:PayloadAction<{name:string,email:string}>)=>{
+    updateUserENAction:(state:UserState,{payload}:PayloadAction<{name:string ,email:string , photo: File | null}>)=>{
       state.user.isLoading = true
     },
     /* prettier-ignore    */
@@ -90,5 +90,5 @@ export const {
   updateUserENActionSuccess,
   updateUserPasswordAction,
   updateUserPasswordActionFailed,
-  updateUserPasswordActionSuccess
+  updateUserPasswordActionSuccess,
 } = userSlice.actions;

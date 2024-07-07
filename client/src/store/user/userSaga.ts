@@ -7,7 +7,7 @@ import {
 } from "../../models/user/userTypes";
 import { PayloadAction } from "@reduxjs/toolkit";
 
-import { UpdateUserEN, logOut, login, updateUserPassword } from "../../utils/userApiCalls";
+import { updateUserEN, logOut, login, updateUserPassword } from "../../utils/userApiCalls";
 import {
   SignOutUserActionFailed,
   SignOutUserActionSuccess,
@@ -25,7 +25,7 @@ function* FetchUserAsync({
 }: PayloadAction<{ email: string; password: string }>) {
   try {
     const user = yield* call(login, email, password);
-
+      
     yield* put(
       getUserActionSuccess(user.data?.doc ? user.data?.doc : ({} as User))
     );
@@ -48,11 +48,13 @@ function* onSignOutUserAsync() {
 }
 
 function* UpdateUserENAsync({
-  payload: { name, email },
-}: PayloadAction<{ name: string; email: string }>) {
+  payload: { name, email,photo },
+}: PayloadAction<{ name: string; email: string,photo: File }>) {
   try {
-    const user = yield* call(UpdateUserEN, name, email);
-
+   
+    const user = yield* call(updateUserEN, name, email,photo);
+    
+    
     
     yield* put(
       updateUserENActionSuccess(user.data?.doc ? user.data?.doc : null)

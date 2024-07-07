@@ -8,16 +8,25 @@ router.route("/signin").post(authController.singIn);
 router.route("/signout").get(authController.signOut);
 router.route("/signup").post(authController.signUp);
 
-
 router.route("/forgotpassword").post(authController.forgotPassword);
 router.route("/resetpassword/:token").patch(authController.resetPassword);
 
 router.use(authController.protect);
 
-router.patch("/updatepass", authController.protect,authController.updatePassword);
+router.patch(
+  "/updatepass",
+  authController.protect,
+  authController.updatePassword
+);
 router.get("/me", userController.getMe, userController.getUser);
 
-router.route("/updateme").patch(authController.protect,userController.updateMe);
+router
+  .route("/updateme")
+  .patch(
+    userController.uploadPhoto,
+    userController.resizePhoto,
+    userController.updateMe
+  );
 
 router.delete("/deleteme", userController.deleteMe);
 
