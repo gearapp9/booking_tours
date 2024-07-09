@@ -20,7 +20,7 @@ const tourSlice = createSlice({
   initialState: INITIAL_STATE,
   reducers: {
     /* prettier-ignore    */
-    getAllToursAction: (state: TourState) => {
+    getAllToursAction: (state: TourState,{payload}:PayloadAction<string|null>) => {
       state.tours.isLoading = true;
     },
     /* prettier-ignore    */

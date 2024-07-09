@@ -24,10 +24,7 @@ import { SignOutUserAction } from "../../store/user/userReducer";
 
 
 const Navigation = () => {
-  console.log(logoWhite);
-  console.log(logd);
-
-  
+   
   const dispatch = useDispatch();
   const user = useSelector(selectUser) as User;
   

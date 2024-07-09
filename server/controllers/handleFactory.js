@@ -6,7 +6,7 @@ exports.getAll = (Model) =>
     // To allow for nested GET reviews on tour (hack)
     let filter = {};
     if (req.params.tourId) filter = { tour: req.params.tourId };
-
+    
     const features = new ApiFeatures(Model.find(), req.query)
       .filter()
       .sort()
@@ -15,7 +15,7 @@ exports.getAll = (Model) =>
 
     // const doc = await features.query.explain()
     const doc = await features.query
-
+    
     res.status(200).json({
       status: "success",
       results: doc.length,

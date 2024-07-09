@@ -2,6 +2,7 @@ const express = require("express");
 const tourController = require("./../controllers/tourController");
 const authController = require("./../controllers/authController");
 const reviewRouter = require("./reviewRouter");
+const bookingController = require("./../controllers/bookingController");
 
 const router = express.Router();
 
@@ -30,7 +31,7 @@ router
 router
   .route("/")
   // authController.protect,
-  .get(tourController.getAllTours)
+  .get(bookingController.createBookingCheckout, tourController.getAllTours)
   .post(
     authController.protect,
     authController.restrictTo("admin", "lead-guide"),

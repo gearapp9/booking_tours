@@ -28,7 +28,7 @@ const TourPage = () => {
   const loading = useSelector(selectTourIsLoading);
 
   const tour = useSelector(selectTour) as Tour;
-
+  
   return (
     <Fragment>
       {!loading && tour != null && user != null ? (
@@ -54,7 +54,7 @@ const TourPage = () => {
             locations={tour.locations}
           />
           <TourReviews reviews={tour.reviews ? tour.reviews : []} />
-          <TourCta duration={tour.duration} images={tour.images} />
+          <TourCta id={tour.id} duration={tour.duration} images={tour.images} />
         </>
       ) : (
         "log in please"
