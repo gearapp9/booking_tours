@@ -5,6 +5,7 @@ const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
 const mongoSanitize = require("express-mongo-sanitize");
 const xss = require("xss-clean");
+const compression = require("compression")
 const hpp = require("hpp");
 const cookieParser = require("cookie-parser");
 const tourRouter = require("./routes/tourRouter");
@@ -61,7 +62,7 @@ app.use(
     ],
   })
 );
-
+app.use(compression())
 //checking the jwt from cookies
 // app.use((req,res,next)=>{
 //   console.log(req.cookies.jwt);

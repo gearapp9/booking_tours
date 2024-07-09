@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getAllToursAction } from "../../store/tour/tourReducer";
 import TourCardContainer from "../../components/tour-card-container/TourCardContainer.component";
-import { useParams, useSearchParams } from "react-router-dom";
+import {  useSearchParams } from "react-router-dom";
 
 const Home = () => {
   const dispatch = useDispatch();
