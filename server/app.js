@@ -69,8 +69,8 @@ app.use(compression())
 //   next()
 // })
 //load static files from public folder
-// app.use(express.static(`${__dirname}/public`));
-app.use('/static', express.static(path.join(__dirname + '/assets')));
+app.use(express.static(`${__dirname}/assets`));
+// app.use('/static', express.static(path.join(__dirname + '/assets')));
 
 app.use("/api/v1/tours", tourRouter);
 app.use("/api/v1/users", userRouter);
