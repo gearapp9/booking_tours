@@ -6,7 +6,6 @@ import TourMap from "../../components/tour-page-components/tour-map/TourMap.comp
 import TourPictures from "../../components/tour-page-components/tour-pictures/TourPictures.component";
 import TourReviews from "../../components/tour-page-components/tour-reviews/TourReviews.component";
 import { Fragment } from "react/jsx-runtime";
-import { redirect, useNavigate } from "react-router-dom";
 import { getTourAction } from "../../store/tour/tourReducer";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -19,7 +18,6 @@ import { User } from "../../models/user/User";
 const TourPage = () => {
   const { slug } = useParams();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const user = useSelector(selectUser) as User;
 
   useEffect(() => {
