@@ -10,8 +10,6 @@
       "use": "@vercel/static"
     }
   ],
-  "trailingSlash": true,
-
   "routes": [
     {
       "src": "/(.*)",
