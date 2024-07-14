@@ -6,7 +6,7 @@ const stripe = await loadStripe(
 );
 
 export const bookingTour = async (tourId: string) => {
-  const session = await axios(`https://booking-tours-server.vercel.app/api/v1/booking/checkout-session/${tourId}`);
+  const session = await axios(`https://booking-tours-server-n8h1.onrender.com/api/v1/booking/checkout-session/${tourId}`);
   await stripe?.redirectToCheckout({
     sessionId: session.data.session.id,
   });
