@@ -8,7 +8,7 @@ export const sendData = async <D, T>(
 ): Promise<T> => {
   const config: AxiosRequestConfig = {
     method,
-    url:`https://booking-tours-server-n8h1.onrender.com/${url}`,
+    url:`https://booking-tours-server-n8h1.onrender.com${url}`,
     data,
     headers,
   };
