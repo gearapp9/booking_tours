@@ -19,7 +19,7 @@ const app = express();
 
 // Set security HTTP headers
 
-app.use(helmet({crossOriginResourcePolicy: false,}));
+app.use(helmet({crossOriginResourcePolicy: false}));
 
 app.use(cors());
 
