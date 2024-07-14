@@ -8,7 +8,7 @@ export default defineConfig({
     port: 5000,
     proxy: {
       "/api": {
-        target: "https://booking-tours-server.vercel.app",
+        target: "https://booking-tours-server-n8h1.onrender.com/",
         changeOrigin: true,
       },
     },
