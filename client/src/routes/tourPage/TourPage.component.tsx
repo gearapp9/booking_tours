@@ -6,7 +6,7 @@ import TourMap from "../../components/tour-page-components/tour-map/TourMap.comp
 import TourPictures from "../../components/tour-page-components/tour-pictures/TourPictures.component";
 import TourReviews from "../../components/tour-page-components/tour-reviews/TourReviews.component";
 import { Fragment } from "react/jsx-runtime";
-
+import { redirect } from "react-router-dom";
 import { getTourAction } from "../../store/tour/tourReducer";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -20,7 +20,9 @@ const TourPage = () => {
   const { slug } = useParams();
   const dispatch = useDispatch();
   const user = useSelector(selectUser) as User;
-
+  if (!user) {
+    return redirect("/sign-in");
+  }
   useEffect(() => {
     user && dispatch(getTourAction(slug ? slug : ""));
   }, []);
@@ -57,7 +59,7 @@ const TourPage = () => {
           <TourCta id={tour.id} duration={tour.duration} images={tour.images} />
         </>
       ) : (
-        "log in please"
+        "Loading..."
       )}
     </Fragment>
   );

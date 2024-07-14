@@ -8,7 +8,7 @@ export const sendData = async <D, T>(
 ): Promise<T> => {
   const config: AxiosRequestConfig = {
     method,
-    url,
+    url:`https://booking-tours-server.vercel.app${url}`,
     data,
     headers,
   };
