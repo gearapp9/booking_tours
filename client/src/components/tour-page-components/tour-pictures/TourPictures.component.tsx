@@ -1,4 +1,3 @@
-import { FastOmit, IStyledComponentBase } from "styled-components/dist/types";
 import { getImageLocation } from "../../../utils/getImageLocation";
 import {
   PictureBox,

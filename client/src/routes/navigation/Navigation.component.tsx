@@ -14,7 +14,6 @@ import {
 } from "./nvaigation.styles";
 
 import logoWhite from "../../assets/logo-white.png";
-import logd from "../../../../server/assets/logo-green-round.png"
 import { Fragment } from "react/jsx-runtime";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../store/user/userSelector";

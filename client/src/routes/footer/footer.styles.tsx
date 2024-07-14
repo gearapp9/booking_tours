@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import { max } from "../../components/styles/styles.component";
-
+import { max } from "../../components/shared-styles/styles.component";
 
 export const FooterContainer = styled.footer`
   background-color: #f7f7f7;

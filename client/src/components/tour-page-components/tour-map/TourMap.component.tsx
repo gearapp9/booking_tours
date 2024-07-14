@@ -1,6 +1,6 @@
 import { LatLngTuple } from "leaflet";
 import { Map, SectionMap } from "./TourMap.styles";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import {  Marker, Popup, TileLayer } from "react-leaflet";
 import { Location } from "../../../models/Tour/Tour";
 
 type TourMap = {

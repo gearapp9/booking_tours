@@ -16,7 +16,7 @@ const userSlice = createSlice({
   reducers: {
     getUserAction: (
       state: UserState,
-      { payload }: PayloadAction<{ email: string; password: string }>
+      { payload:_ }: PayloadAction<{ email: string; password: string }>
     ) => {
       state.user.isLoading = true;
     },
@@ -45,7 +45,7 @@ const userSlice = createSlice({
       state.user.error = payload
     },
     /* prettier-ignore    */
-    updateUserENAction:(state:UserState,{payload}:PayloadAction<{name:string ,email:string , photo: File | null}>)=>{
+    updateUserENAction:(state:UserState,{payload:_}:PayloadAction<{name:string ,email:string , photo: File | null}>)=>{
       state.user.isLoading = true
     },
     /* prettier-ignore    */
@@ -59,7 +59,7 @@ const userSlice = createSlice({
       state.user.error = payload
     },
     /* prettier-ignore    */
-    updateUserPasswordAction:(state:UserState,{payload}:PayloadAction<{ currentPassword: string; password: string;
+    updateUserPasswordAction:(state:UserState,{payload:_}:PayloadAction<{ currentPassword: string; password: string;
       passwordConfirm: string;
     }>)=>{
       state.user.isLoading=true

@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { getImageLocation } from "../../../utils/getImageLocation";
 import { HeadingSecondary } from "../../shared-styles/styles.component";
 import {
