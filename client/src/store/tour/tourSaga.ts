@@ -1,7 +1,7 @@
 import { takeLatest, put, all, call } from "typed-redux-saga";
 
 import { ALL_TOURS_ACTION, TOUR_ACTION } from "../../models/Tour/TourTypes";
-import { getAllTours, getTour } from "../../utils/toursApiCalls";
+import { getAllTours , getTour} from "../../utils/toursApiCalls";
 import {
   getAllToursActionFailed,
   getAllToursActionSuccess,

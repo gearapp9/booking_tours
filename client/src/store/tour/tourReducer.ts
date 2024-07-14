@@ -36,7 +36,7 @@ const tourSlice = createSlice({
 
     //one single tour
     /* prettier-ignore    */
-    getTourAction: (state: TourState,{payload}:PayloadAction<string>) => {
+    getTourAction: (state: TourState,{payload:_}:PayloadAction<string>) => {
       state.tour.isLoading = true;
     },
     /* prettier-ignore    */
