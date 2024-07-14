@@ -30,7 +30,7 @@ const TourPage = () => {
   const loading = useSelector(selectTourIsLoading);
 
   const tour = useSelector(selectTour) as Tour;
-  
+
   return (
     <Fragment>
       {!loading && tour != null && user != null ? (
