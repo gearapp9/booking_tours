@@ -8,9 +8,20 @@ export default defineConfig({
     port: 5000,
     proxy: {
       "/api": {
-        target: "http://127.0.0.1:3000",
+        target: "https://booking-tours-server.vercel.app",
         changeOrigin: true,
       },
+    },
+  },
+  build: {
+    target: "es2022",
+  },
+  esbuild: {
+    target: "es2022",
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      target: "es2022",
     },
   },
 });
