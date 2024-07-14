@@ -10,9 +10,7 @@ import { Tour } from "../../models/Tour/Tour";
 const TourCardContainer = () => {
   const tours = useSelector(selectAllToursData) as Tour[]  ;
   const loading = useSelector(selectAllToursIsLoading);
-  console.log(tours);
-  
-  
+    
   
 
   return (
