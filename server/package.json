@@ -6,10 +6,10 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "start": "nodemon server.js",
-    "prod": "SET NODE_DEV=production & nodemon server.js",
+    "start": "nodemon index.js",
+    "prod": "SET NODE_DEV=production & nodemon index.js",
     "build": "parcel build server.js",
-    "vercel-build":"echo hello"
+    "vercel-build": "echo hello"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
