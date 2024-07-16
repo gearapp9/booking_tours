@@ -1,5 +1,5 @@
 import axios, {  AxiosRequestConfig, RawAxiosRequestHeaders } from "axios";
-
+axios.defaults.withCredentials = true;
 export const sendData = async <D, T>(
   url: string,
   data: D,
